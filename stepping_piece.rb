@@ -27,7 +27,7 @@ module Chess
 
     private
 
-    def move offsets
+    def move_offsets
       [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
     end
   end
