@@ -3,7 +3,24 @@ require "./piece"
 module Chess
   class SlidingPiece < Piece
     def moves
-      offsets = move_offsets
+      moves_array = []
+
+      move_offsets.each do |offset|
+        new_x = position[0] + offset[0]
+        new_y = position[1] + offset[1]
+
+        while on_board?([new_x, new_y]) && !position_occupied_by_us?([new_x, new_y])
+          moves_array << [new_x, new_y]
+
+          # check if occurpied by other
+          break if position_occupied_by_other?([new_x, new_y])
+
+          new_x += offset[0]
+          new_y += offset[1]
+        end
+      end
+
+      moves_array
     end
   end
 
