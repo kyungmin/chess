@@ -23,14 +23,14 @@ module Chess
 
   class King < SteppingPiece
     def moves
-      offsets     = [[0, 1],
-                     [0, -1],
-                     [1, 0],
-                     [-1, 0],
-                     [-1, -1],
-                     [-1, 1],
-                     [1, -1],
-                     [1, 1] ]
+      offsets = [[0, 1],
+                 [0, -1],
+                 [1, 0],
+                 [-1, 0],
+                 [-1, -1],
+                 [-1, 1],
+                 [1, -1],
+                 [1, 1] ]
       find_moves(offsets)
     end
 
@@ -42,14 +42,14 @@ module Chess
 
   class Knight < SteppingPiece
     def moves
-      offsets     = [[1, 2],
-                     [2, 1],
-                     [2, -1],
-                     [1, -2],
-                     [-1, -2],
-                     [-2, -1],
-                     [-2, 1],
-                     [-1, 2] ]
+      offsets = [[1, 2],
+                 [2, 1],
+                 [2, -1],
+                 [1, -2],
+                 [-1, -2],
+                 [-2, -1],
+                 [-2, 1],
+                 [-1, 2] ]
       find_moves(offsets)
     end
 
