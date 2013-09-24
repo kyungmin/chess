@@ -2,12 +2,10 @@ require "./piece"
 
 module Chess
   class SteppingPiece < Piece
-    private
-
-    def find_moves(offsets)
+    def moves
       moves_array = []
 
-      offsets.each do |x_offset, y_offset|
+      move_offsets.each do |x_offset, y_offset|
         new_x = position[0] + x_offset
         new_y = position[1] + y_offset
 
@@ -22,39 +20,29 @@ module Chess
 
 
   class King < SteppingPiece
-    def moves
-      offsets = [[0, 1],
-                 [0, -1],
-                 [1, 0],
-                 [-1, 0],
-                 [-1, -1],
-                 [-1, 1],
-                 [1, -1],
-                 [1, 1] ]
-      find_moves(offsets)
-    end
-
     def to_s
       (color == :white) ? "\u2654" : "\u265A"
+    end
+
+
+    private
+
+    def move offsets
+      [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]
     end
   end
 
 
   class Knight < SteppingPiece
-    def moves
-      offsets = [[1, 2],
-                 [2, 1],
-                 [2, -1],
-                 [1, -2],
-                 [-1, -2],
-                 [-2, -1],
-                 [-2, 1],
-                 [-1, 2] ]
-      find_moves(offsets)
-    end
-
     def to_s
       (color == :white) ? "\u2658" : "\u265E"
+    end
+
+
+    private
+
+    def move_offsets
+      [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
     end
   end
 end
