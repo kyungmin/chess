@@ -9,7 +9,7 @@ module Chess
         new_x = position[0] + x_offset
         new_y = position[1] + y_offset
 
-        if new_x.between?(0, 7) && new_y.between?(0, 7)
+        if on_board?([new_x, new_y]) && !position_occupied_by_us?([new_x, new_y])
           moves_array << [new_x, new_y]
         end
       end
