@@ -21,6 +21,10 @@ module Chess
       end
     end
 
+    def dup
+      raise "Cannot yet duplicate the board"
+    end
+
     private
 
     def init_grid
