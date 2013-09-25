@@ -1,7 +1,7 @@
-require "./piece"
-require "./pawn"
-require "./stepping_piece"
-require "./sliding_piece"
+require_relative "./piece"
+require_relative "./pawn"
+require_relative "./stepping_piece"
+require_relative "./sliding_piece"
 
 module Chess
   class Board
