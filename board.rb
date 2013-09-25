@@ -17,7 +17,7 @@ module Chess
 
       @grid[pos1[0]][pos1[1]] = nil
       @grid[pos2[0]][pos2[1]] = piece
-
+      piece.position = pos2
     end
 
     def show_grid
@@ -46,12 +46,34 @@ module Chess
       pieces
     end
 
+    def won?
+
+    end
+
+    def game_over?
+      checkmate?(:white) || checkmate?(:black) || stalemate?
+    end
+
     def check?(color)
       king = king(color)
       pieces(color == :white ?  :black : :white).each do |piece|
         return true if piece.moves.include?(king.position)
       end
 
+      false
+    end
+
+    def checkmate?(color)
+      return false unless check?(color)
+
+      pieces(color).each do |piece|
+        return false if piece.valid_moves.length > 0
+      end
+
+      true
+    end
+
+    def stalemate?
       false
     end
 
