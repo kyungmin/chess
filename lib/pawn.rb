@@ -1,4 +1,5 @@
 require_relative "./piece"
+require_relative "./constants"
 
 module Chess
   class Pawn < Piece
@@ -18,7 +19,7 @@ module Chess
     end
 
     def to_s
-      (color == :white) ? "\u2659" : "\u265F"
+      (color == :white) ? Constants::PAWN_WHITE : Constants::PAWN_BLACK
     end
 
 

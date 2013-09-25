@@ -1,4 +1,5 @@
 require_relative "./piece"
+require_relative "./constants"
 
 module Chess
   class SlidingPiece < Piece
@@ -28,7 +29,7 @@ module Chess
 
   class Queen < SlidingPiece
     def to_s
-      (color == :white) ? "\u2655" : "\u265B"
+      (color == :white) ? Constants::QUEEN_WHITE : Constants::QUEEN_BLACK
     end
 
 
@@ -43,7 +44,7 @@ module Chess
 
   class Rook < SlidingPiece
     def to_s
-      (color == :white) ? "\u2656" : "\u265C"
+      (color == :white) ? Constants::ROOK_WHITE : Constants::ROOK_BLACK
     end
 
 
@@ -58,7 +59,7 @@ module Chess
 
   class Bishop < SlidingPiece
     def to_s
-      (color == :white) ? "\u2657" : "\u265D"
+      (color == :white) ? Constants::BISHOP_WHITE : Constants::BISHOP_BLACK
     end
 
 
