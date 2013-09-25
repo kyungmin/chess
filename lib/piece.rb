@@ -1,5 +1,4 @@
 module Chess
-
   class Piece
     attr_reader :color, :board
     attr_accessor :position
@@ -20,7 +19,7 @@ module Chess
       new_board.grid[position[0]][position[1]] = nil
       new_board.grid[pos[0]][pos[1]] = self
 
-      !new_board.check?(color)# == :white ? :black : :white)
+      !new_board.check?(color)
     end
 
 

@@ -41,5 +41,8 @@ module Chess
     def to_s
       (color == :white) ? "\u2659" : "\u265F"
     end
+
+
+    private
   end
 end

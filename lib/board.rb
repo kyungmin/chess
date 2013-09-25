@@ -1,3 +1,5 @@
+require "colorize"
+
 require_relative "./piece"
 require_relative "./pawn"
 require_relative "./stepping_piece"
@@ -30,12 +32,17 @@ module Chess
     end
 
     def show_grid
-      puts "   a  b  c  d  e  f  g  h"
+      puts "   a   b   c   d   e   f   g   h".colorize(:white)
+      background = [:white, :light_white]
+      bg_toggle = 0
       @grid.each_with_index do |row, index|
-        print "#{@grid.length-index} "
+        print "#{@grid.length-index} ".colorize(:white)
         row.each do |piece|
-          print " #{piece ? piece : " "} "
+          print " #{piece ? piece : " "}  ".colorize(:color => :black,
+          :background => background[bg_toggle])
+          bg_toggle = (bg_toggle == 0 ? 1 : 0)
         end
+        bg_toggle = (bg_toggle == 0 ? 1 : 0)
         puts
       end
     end
