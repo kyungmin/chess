@@ -27,6 +27,7 @@ module Chess
         player = next_player(player)
       end
 
+      board.show_grid
       if board.checkmate?(:white)
         puts "Black won!"
       else

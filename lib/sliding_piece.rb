@@ -13,7 +13,7 @@ module Chess
           !board.position_occupied_by_color?([new_x, new_y], color)
           moves_array << [new_x, new_y]
 
-          # check if occurpied by other
+          # check if occupied by other
           break if board.position_occupied_by_color?([new_x, new_y], opponent_color)
 
           new_x += offset[0]

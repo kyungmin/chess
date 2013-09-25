@@ -115,7 +115,7 @@ module Chess
       @grid.each do |row|
         new_row = []
         row.each do |piece|
-          new_row << (piece ? piece.dup : nil)
+          new_row << (piece ? piece.dup(new_board) : nil)
         end
         grid << new_row
       end
