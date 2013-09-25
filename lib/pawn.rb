@@ -12,11 +12,11 @@ module Chess
       moves_array = []
       new_position = [position[0].send(@direction, 1), position[1]]
 
-      if on_board?(new_position) && !position_occupied?(new_position)
+      if board.on_board?(new_position) && !board.position_occupied?(new_position)
         moves_array << new_position
         next_position = [new_position[0].send(@direction, 1), new_position[1]]
-        if !@moved && !position_occupied?(new_position) &&
-          (on_board?(next_position) && !position_occupied?(next_position))
+        if !@moved && !board.position_occupied?(new_position) &&
+          (board.on_board?(next_position) && !board.position_occupied?(next_position))
           moves_array << next_position
         end
       end
@@ -24,7 +24,8 @@ module Chess
       diagonal_positions = [[position[0].send(@direction, 1), position[1] - 1],
                           [position[0].send(@direction, 1), position[1] + 1]]
       diagonal_positions.each do |diagonal_position|
-        if on_board?(diagonal_position) && position_occupied_by_other?(diagonal_position)
+        if board.on_board?(diagonal_position) &&
+          board.position_occupied_by_color?(diagonal_position, opponent_color)
           moves_array << diagonal_position
         end
       end

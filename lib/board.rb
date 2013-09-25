@@ -46,9 +46,30 @@ module Chess
       pieces
     end
 
-    def won?
-
+    def on_board?(pos)
+      pos[0].between?(0, 7) && pos[1].between?(0, 7)
     end
+
+    def position_occupied?(pos)
+      position_occupied_by_color?(pos, :white) ||
+      position_occupied_by_color?(pos, :black)
+    end
+
+    def position_occupied_by_color?(pos, color)
+      piece = self.piece(pos)
+
+      return false if piece.nil?
+
+      piece.color == color
+    end
+
+    # def position_occupied_by_other?(pos)
+#       piece = board.piece(pos)
+#
+#       return false if piece.nil?
+#
+#       piece.color != self.color
+#     end
 
     def game_over?
       checkmate?(:white) || checkmate?(:black) || stalemate?

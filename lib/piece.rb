@@ -26,28 +26,8 @@ module Chess
 
     private
 
-    def on_board?(pos)
-      pos[0].between?(0, 7) && pos[1].between?(0, 7)
-    end
-
-    def position_occupied?(pos)
-      position_occupied_by_us?(pos) || position_occupied_by_other?(pos)
-    end
-
-    def position_occupied_by_us?(pos)
-      piece = board.piece(pos)
-
-      return false if piece.nil?
-
-      piece.color == self.color
-    end
-
-    def position_occupied_by_other?(pos)
-      piece = board.piece(pos)
-
-      return false if piece.nil?
-
-      piece.color != self.color
+    def opponent_color
+      (color == :white ? :black : :white)
     end
   end
 end

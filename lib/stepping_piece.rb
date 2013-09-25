@@ -9,7 +9,8 @@ module Chess
         new_x = position[0] + x_offset
         new_y = position[1] + y_offset
 
-        if on_board?([new_x, new_y]) && !position_occupied_by_us?([new_x, new_y])
+        if board.on_board?([new_x, new_y]) &&
+          !board.position_occupied_by_color?([new_x, new_y], color)
           moves_array << [new_x, new_y]
         end
       end
