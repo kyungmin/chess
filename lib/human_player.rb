@@ -11,7 +11,7 @@ module Chess
     end
 
     def next_move
-      gets.chomp.gsub(/[^12345678abcdefghq]/, "")
+      gets.chomp.gsub(/[^1-8a-hq]/, "")
     end
   end
 end

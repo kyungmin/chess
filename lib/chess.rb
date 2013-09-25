@@ -12,6 +12,7 @@ module Chess
       players = [HumanPlayer.new(:white), HumanPlayer.new(:black)]
       current_player = 0
       until board.game_over?(players[current_player].color)
+        # puts board
         board.show_grid
 
         while true
@@ -35,7 +36,6 @@ module Chess
       else
         puts "White won!"
       end
-
     end
 
     private

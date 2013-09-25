@@ -35,7 +35,9 @@ module Chess
       piece.position = pos2
     end
 
+    # def to_s
     def show_grid
+      # board_str = ""
       puts "   a   b   c   d   e   f   g   h".colorize(:white)
       background = [:white, :light_white]
       bg_toggle = 0
@@ -49,8 +51,12 @@ module Chess
         bg_toggle = (bg_toggle == 0 ? 1 : 0)
         puts
       end
+
+      nil
     end
 
+    # def [](pos)
+    # def []=(pos, val)
     def piece(pos)
       @grid[pos[0]][pos[1]]
     end
@@ -71,6 +77,7 @@ module Chess
     end
 
     def position_occupied?(pos)
+      # !!piece(pos)
       position_occupied_by_color?(pos, :white) ||
       position_occupied_by_color?(pos, :black)
     end
@@ -91,24 +98,19 @@ module Chess
 
     def check?(color)
       king = king(color)
-      pieces(color == :white ?  :black : :white).each do |piece|
-        return true if piece.moves.include?(king.position)
+      pieces(color == :white ?  :black : :white).any? do |piece|
+        piece.moves.include?(king.position)
       end
-
-      false
     end
 
     def checkmate?(color)
-      return false unless check?(color)
-      stalemate?(color)
+      check?(color) && stalemate?(color)
     end
 
     def stalemate?(color)
-      pieces(color).each do |piece|
-        return false if piece.valid_moves.length > 0
+      pieces(color).none? do |piece|
+        piece.valid_moves.length > 0
       end
-
-      true
     end
 
     def dup
