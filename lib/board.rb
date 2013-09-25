@@ -11,8 +11,6 @@ module Chess
 
 
   class Board
-    attr_reader :grid
-
     def initialize
       @grid = init_grid
     end
@@ -25,6 +23,12 @@ module Chess
       elsif !piece.valid_moves.include?(pos2)
         raise InvalidMoveException.new("Invalid move!")
       end
+
+      move!(pos1, pos2, color)
+    end
+
+    def move!(pos1, pos2, color)
+      piece = piece(pos1)
 
       @grid[pos1[0]][pos1[1]] = nil
       @grid[pos2[0]][pos2[1]] = piece

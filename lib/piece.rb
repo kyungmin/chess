@@ -15,11 +15,7 @@ module Chess
 
     def valid_move?(pos)
       new_board = @board.dup
-
-      piece = new_board.piece(position)
-      new_board.grid[position[0]][position[1]] = nil
-      new_board.grid[pos[0]][pos[1]] = piece
-      piece.position = pos
+      new_board.move!(position, pos, color)
 
       !new_board.check?(color)
     end
