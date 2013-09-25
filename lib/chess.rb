@@ -1,4 +1,5 @@
 require_relative './board'
+require_relative './human_player'
 
 module Chess
   class Game
@@ -8,14 +9,15 @@ module Chess
     def play
       board = Board.new
 
-      player = :white
-      until board.game_over?(player)
+      players = [HumanPlayer.new(:white), HumanPlayer.new(:black)]
+      current_player = 0
+      until board.game_over?(players[current_player].color)
         board.show_grid
 
         while true
           begin
-            start_pos, end_pos = get_input(player)
-            board.move(start_pos, end_pos, player)
+            start_pos, end_pos = get_input(players[current_player])
+            board.move(start_pos, end_pos, players[current_player].color)
           rescue InvalidMoveException => e
             puts e.message
             next
@@ -24,7 +26,7 @@ module Chess
           break
         end
 
-        player = next_player(player)
+        current_player = next_player(current_player)
       end
 
       board.show_grid
@@ -39,14 +41,14 @@ module Chess
     private
 
     def get_input(player)
-      puts "#{player.to_s.capitalize}: Enter move."
+      puts "#{player.name}: Enter move."
       grid_map = {  "h" => 7, "g" => 6, "f" => 5, "e" => 4,
                     "d" => 3, "c" => 2, "b" => 1, "a" => 0,
                     "1" => 7, "2" => 6, "3" => 5, "4" => 4,
                     "5" => 3, "6" => 2, "7" => 1, "8" => 0 }
 
-      input = gets.chomp.gsub(/[^12345678abcdefghq]/, "")
-      # input = gets.chomp
+      # input = gets.chomp.gsub(/[^12345678abcdefghq]/, "")
+      input = player.next_move
       if input == "q"
         exit
       end
@@ -58,7 +60,7 @@ module Chess
     end
 
     def next_player(player)
-      (player == :white ? :black : :white)
+      (player == 0 ? 1 : 0)
     end
   end
 end
