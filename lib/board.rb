@@ -4,6 +4,10 @@ require_relative "./stepping_piece"
 require_relative "./sliding_piece"
 
 module Chess
+  class InvalidMoveException < Exception
+  end
+
+
   class Board
     attr_reader :grid
 
@@ -11,9 +15,14 @@ module Chess
       @grid = init_grid
     end
 
-    def move(pos1, pos2)
+    def move(pos1, pos2, color)
       piece = piece(pos1)
-      raise "Invalid move!" unless piece.valid_move?(pos2)
+      if piece.color != color
+        message = "Invalid move: piece at (#{pos1[0]}, #{pos1[1]}) not #{color}."
+        raise InvalidMoveException.new(message)
+      elsif !piece.valid_moves.include?(pos2)
+        raise InvalidMoveException.new("Invalid move!")
+      end
 
       @grid[pos1[0]][pos1[1]] = nil
       @grid[pos2[0]][pos2[1]] = piece
@@ -63,16 +72,10 @@ module Chess
       piece.color == color
     end
 
-    # def position_occupied_by_other?(pos)
-#       piece = board.piece(pos)
-#
-#       return false if piece.nil?
-#
-#       piece.color != self.color
-#     end
-
-    def game_over?
-      checkmate?(:white) || checkmate?(:black) || stalemate?
+    def game_over?(color)
+      # every checkmate is a stalemate when currently in check
+      # so only need to look for stalemate
+      stalemate?(color)
     end
 
     def check?(color)
@@ -86,16 +89,15 @@ module Chess
 
     def checkmate?(color)
       return false unless check?(color)
+      stalemate?(color)
+    end
 
+    def stalemate?(color)
       pieces(color).each do |piece|
         return false if piece.valid_moves.length > 0
       end
 
       true
-    end
-
-    def stalemate?
-      false
     end
 
     def dup
