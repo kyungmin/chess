@@ -190,12 +190,9 @@ module Chess
         rook = self.piece([king.position[0], 0])
       end
 
-      raise InvalidMoveException.new("Rook has moved already.") if rook.nil?
-      raise InvalidMoveException.new("Not a rook in that position.") unless rook.is_a?(Rook) && (rook.color == king.color)
-
-      if !king.moved? && !rook.moved? && positions_empty?(king, rook)
-        #special move
-        if rook.position[0] == 7 # right side
+      if castling_possible?(king, rook)
+        # make the special move
+        if rook.position[1] == 7 # right side
           new_king_pos = [king.position[0], 6]
           new_rook_pos = [king.position[0], 5]
         else
@@ -210,9 +207,14 @@ module Chess
 
     end
 
+    def castling_possible?(king, rook)
+      !rook.nil? && rook.is_a?(Rook) && (rook.color == king.color) &&
+              !king.moved? && !rook.moved? && positions_empty?(king, rook)
+    end
+
     def positions_empty?(king, rook)
       positions = []
-      if rook.position[0] == 7 # right side
+      if rook.position[1] == 7 # right side
         positions << [king.position[0], 5]
         positions << [king.position[0], 6]
       else # left side
@@ -225,10 +227,6 @@ module Chess
         piece(position).nil?
       end
     end
-
-
-
-
 
   end
 end
