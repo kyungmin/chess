@@ -43,10 +43,23 @@ module Chess
 
 
   class Rook < SlidingPiece
+    def initialize(color, position, board)
+      super(color, position, board)
+      @moved = false
+    end
+
     def to_s
       (color == :white) ? Constants::ROOK_WHITE : Constants::ROOK_BLACK
     end
 
+    def position=(pos)
+      @moved = true
+      super(pos)
+    end
+
+    def moved?
+      @moved
+    end
 
     private
 

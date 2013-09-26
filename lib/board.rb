@@ -20,11 +20,13 @@ module Chess
       if piece.color != color
         message = "Invalid move: piece at (#{pos1[0]}, #{pos1[1]}) not #{color}."
         raise InvalidMoveException.new(message)
+      elsif castling?(piece, pos2)
+        try_castling(piece, pos2)
       elsif !piece.valid_moves.include?(pos2)
         raise InvalidMoveException.new("Invalid move!")
+      else
+        move!(pos1, pos2, color)
       end
-
-      move!(pos1, pos2, color)
     end
 
     def move!(pos1, pos2, color)
@@ -171,6 +173,62 @@ module Chess
         end
       end
     end
+
+    def castling?(piece, pos2)
+      return false unless piece.is_a?(King)
+
+      original_y = piece.position[1]
+      new_y = pos2[1]
+
+      (new_y - original_y).abs == 2
+    end
+
+    def try_castling(king, pos2)
+      if pos2[1] == 6
+        rook = self.piece([king.position[0], 7])
+      else
+        rook = self.piece([king.position[0], 0])
+      end
+
+      raise InvalidMoveException.new("Rook has moved already.") if rook.nil?
+      raise InvalidMoveException.new("Not a rook in that position.") unless rook.is_a?(Rook) && (rook.color == king.color)
+
+      if !king.moved? && !rook.moved? && positions_empty?(king, rook)
+        #special move
+        if rook.position[0] == 7 # right side
+          new_king_pos = [king.position[0], 6]
+          new_rook_pos = [king.position[0], 5]
+        else
+          new_king_pos = [king.position[0], 2]
+          new_rook_pos = [king.position[0], 3]
+        end
+        move!(king.position, new_king_pos, king.color)
+        move!(rook.position, new_rook_pos, king.color)
+      else
+        raise InvalidMoveException.new("Castling is not possible.")
+      end
+
+    end
+
+    def positions_empty?(king, rook)
+      positions = []
+      if rook.position[0] == 7 # right side
+        positions << [king.position[0], 5]
+        positions << [king.position[0], 6]
+      else # left side
+        positions << [king.position[0], 1]
+        positions << [king.position[0], 2]
+        positions << [king.position[0], 3]
+      end
+
+      positions.all? do |position|
+        piece(position).nil?
+      end
+    end
+
+
+
+
 
   end
 end

@@ -22,10 +22,23 @@ module Chess
 
 
   class King < SteppingPiece
+    def initialize(color, position, board)
+      super(color, position, board)
+      @moved = false
+    end
+
     def to_s
       (color == :white) ? Constants::KING_WHITE : Constants::KING_BLACK
     end
 
+    def position=(pos)
+      @moved = true
+      super(pos)
+    end
+
+    def moved?
+      @moved
+    end
 
     private
 
